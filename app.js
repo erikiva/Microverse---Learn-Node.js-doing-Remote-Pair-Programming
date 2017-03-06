@@ -1,22 +1,20 @@
+//import router from "./router";
 //const http = require('http');
-const express = require('express');
+
+const express  = require('express');
 const hostname = '127.0.0.1';
-const port = 3000;
+const port     = 3000;
+const app      = express();
+const users = require('./api_users');
 
 
-let app = express();
 
-app.get('/', (req, res)	 => {
+app.get('/', (req, res)	=> {
 	res.send('hello');
 });
 
-app.get('/about', (req, res)	 => {
-	res.send('about');
-});
+app.use('/users', users);
 
-app.post('/', (req, res) => {
-	res.send('post');
-});
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')

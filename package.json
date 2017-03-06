@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/sftl/Microverse---Learn-Node.js-doing-Remote-Pair-Programming#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "4.15.2"
   }
 }

@@ -13,6 +13,16 @@ router.get('/:id', (req, res) => {
 	res.json(event);
 })
 
+router.post('/', (req, res) => {
+	res.status(200);
+	let event = {'id': req.body.id,
+		'title': req.body.title,
+		'description': req.body.description,
+		'date': req.body.date};
+	events.push(event);
+	res.json(event);
+})
+
 
 router.post('/', (req, res) => {
 	res.send('routes post');

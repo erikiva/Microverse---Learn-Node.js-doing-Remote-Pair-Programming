@@ -5,7 +5,7 @@ const express  = require('express');
 const hostname = '127.0.0.1';
 const port     = 3000;
 const app      = express();
-const users = require('./api_users');
+const events = require('./api_events');
 
 
 
@@ -13,7 +13,7 @@ app.get('/', (req, res)	=> {
 	res.send('hello');
 });
 
-app.use('/users', users);
+app.use('/events', events);
 
 
 app.listen(3000, function () {

@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
+const events = require('./data')
 
 router.get('/', (req, res) => {
-	res.send('routes get');
+	res.status(200);
+	res.json(events);
 })
+
+router.get('/:id', (req, res) => {
+	res.status(200);
+	let event = events.filter(event => event.id == req.params.id);
+	res.json(event);
+})
+
 
 router.post('/', (req, res) => {
 	res.send('routes post');

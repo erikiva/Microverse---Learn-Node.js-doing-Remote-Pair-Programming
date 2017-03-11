@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
 	res.status(200);
-	let event = events.filter(event => event.id == req.params.id);
+	let event = events.filter(event => event.id === parseInt(req.params.id));
 	res.json(event);
 })
 
@@ -25,13 +25,27 @@ router.post('/', (req, res) => {
 
 router.put('/', (req, res) => {
 	res.status(200);
-	let id = req.body.id;
-	let event = events.find(event => event.id == id);
+	let id = parseInt(req.body.id);
+	let event = events.find(event => event.id === id);
 	event.title = req.body.title;
 	event.description = req.body.description;
 	res.json(event);
 })
 
+router.delete('/:id', (req, res) => {
+	let id = parseInt(req.params.id);
+	let event = events.find(event => event.id === id);
+
+	if (event) {
+		events = events.filter(event => event.id !== id);
+		console.log(id, events);
+		res.status(200);
+		res.json(event);
+	} else {
+		res.status(404);
+		res.send('event not found');
+	}
+})
 
 module.exports = router;
 

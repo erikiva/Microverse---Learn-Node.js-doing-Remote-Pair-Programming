@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const events = require('./data')
+let events = require('./data')
 
 router.get('/', (req, res) => {
 	res.status(200);
@@ -23,15 +23,15 @@ router.post('/', (req, res) => {
 	res.json(event);
 })
 
-
-router.post('/', (req, res) => {
-	res.send('routes post');
-})
-
 router.put('/', (req, res) => {
-	res.send('routes put');
+	res.status(200);
+	let id = req.body.id;
+	let event = events.find(event => event.id == id);
+	event.title = req.body.title;
+	event.description = req.body.description;
+	res.json(event);
 })
+
 
 module.exports = router;
 
-//export default router;

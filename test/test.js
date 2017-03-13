@@ -24,11 +24,27 @@ describe('Test Events Api', () => {
 			chai.request('http://localhost:3000')
 			.get('/events')
 			.end((err, res) => {
-
-				console.log(res.body);
 				res.should.have.status(200);
 				res.error.should.be.false;
 				res.body.should.be.an('array');
+				done();
+			});
+		});
+	});
+
+	/*
+	* Test the /GET route
+	*/
+	describe('/GET event by :Id', () => {
+		it('It should GET an event by Id', (done) => {
+			chai.request('http://localhost:3000')
+			.get('/events/1')
+			.end((err, res) => {
+
+				res.should.have.status(200);
+				res.error.should.be.false;
+				res.body.should.be.an('object');
+				res.body.should.have.property('id').equal(1);
 				done();
 			});
 		});

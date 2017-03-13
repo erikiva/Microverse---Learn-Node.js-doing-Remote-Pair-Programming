@@ -40,11 +40,34 @@ describe('Test Events Api', () => {
 			chai.request('http://localhost:3000')
 			.get('/events/1')
 			.end((err, res) => {
-
 				res.should.have.status(200);
 				res.error.should.be.false;
 				res.body.should.be.an('object');
 				res.body.should.have.property('id').equal(1);
+				done();
+			});
+		});
+	});
+
+	/*
+	* Test the /POST route
+	*/
+	describe('/POST event', () => {
+		it('It should POST an event', (done) => {
+			let event = {
+				'title': 'a',
+				'description': 'a',
+				'date': '01-02-2017'
+			};
+
+			chai.request('http://localhost:3000')
+			.post('/events')
+			.send(event)
+			.end((err, res) => {
+				res.should.have.status(200);
+				res.error.should.be.false;
+				res.body.should.be.an('object');
+				res.body.should.have.property('title').equal('a');
 				done();
 			});
 		});

@@ -72,5 +72,31 @@ describe('Test Events Api', () => {
 			});
 		});
 	});
+
+
+  /*
+  * Test the /PUT route
+  */
+  describe('/PUT event', () => {
+    it('It should UPDATE an event', (done) => {
+      let event = {
+        'title': 'a',
+        'description': 'a',
+        'date': '01-02-2017'
+      };
+
+      chai.request('http://localhost:3000')
+      .put('/events/1')
+      .send(event)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.error.should.be.false;
+        res.body.should.be.an('object');
+        res.body.should.have.property('title').equal('a');
+        done();
+      });
+    });
+  });
+
 });
 

@@ -23,9 +23,9 @@ router.post('/', (req, res) => {
 	res.json(event);
 })
 
-router.put('/', (req, res) => {
+router.put('/:id', (req, res) => {
 	res.status(200);
-	let id = parseInt(req.body.id);
+	let id = parseInt(req.params.id);
 	let event = events.find(event => event.id === id);
 	event.title = req.body.title;
 	event.description = req.body.description;

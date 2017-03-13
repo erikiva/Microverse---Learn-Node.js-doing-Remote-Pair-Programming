@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
 	res.status(200);
-	let event = events.filter(event => event.id === parseInt(req.params.id));
+	let event = events.find(event => event.id === parseInt(req.params.id));
 	res.json(event);
 })
 

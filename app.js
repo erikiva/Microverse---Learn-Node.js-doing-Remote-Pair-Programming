@@ -6,8 +6,10 @@ const bodyParser = require('body-parser');
 const hostname = '127.0.0.1';
 const port     = 3000;
 const app      = express();
-const events = require('./api_events');
-const db = require('./db');
+const events = require('./events/events.api');
+//const events = require('./api_events');
+
+/*const db = require('./db');
 const url = 'mongodb://localhost:27017/api';
 
 db.connect(url, function(err) {
@@ -19,7 +21,10 @@ db.connect(url, function(err) {
       console.log('Listening on port 3000...')
     })
   }
-})
+})*/
+
+const  mongoose = require('./mongoose');
+mongoose();
 
 
 
@@ -33,11 +38,6 @@ app.get('/', (req, res)	=> {
 app.use('/events', events);
 
 
-// app.listen(3000, function () {
-//   console.log('Example app listening on port 3000!')
-// })
-
-
-
-
-
+app.listen(3000, function () {
+   console.log('Example app listening on port 3000!')
+})

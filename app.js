@@ -7,6 +7,21 @@ const hostname = '127.0.0.1';
 const port     = 3000;
 const app      = express();
 const events = require('./api_events');
+const db = require('./db');
+const url = 'mongodb://localhost:27017/api';
+
+db.connect(url, function(err) {
+  if (err) {
+    console.log('Unable to connect to Mongo.')
+    process.exit(1)
+  } else {
+    app.listen(3000, function() {
+      console.log('Listening on port 3000...')
+    })
+  }
+})
+
+
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -18,17 +33,11 @@ app.get('/', (req, res)	=> {
 app.use('/events', events);
 
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-})
-
-/*const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});
+// app.listen(3000, function () {
+//   console.log('Example app listening on port 3000!')
+// })
 
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});*/
+
+
+

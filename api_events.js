@@ -1,50 +1,60 @@
 const express = require('express');
 const router = express.Router();
-let events = require('./data')
+//let events = require('./data')
+const db = require('./db');
 
 router.get('/', (req, res) => {
-	res.status(200);
-	res.json(events);
+	const events = db.get().collection('events');
+	events.find().toArray(function(err, docs) {
+		res.status(200).json(docs)
+  })
 })
 
 router.get('/:id', (req, res) => {
-	res.status(200);
-	let event = events.find(event => event.id === parseInt(req.params.id));
-	res.json(event);
+	const events = db.get().collection('events');
+	events.find({id: parseInt(req.params.id)}).toArray(function(err, docs) {
+		res.status(200).json(docs)
+  })
 })
 
 router.post('/', (req, res) => {
-	res.status(200);
 	let event = {'id': req.body.id,
 		'title': req.body.title,
 		'description': req.body.description,
 		'date': req.body.date};
-	events.push(event);
-	res.json(event);
+	const events = db.get().collection('events');
+	const returned = events.insertOne(event, function(error, data){
+		console.log(error, data);
+		res.status(200).json(data.ops)
+	});
+
 })
 
 router.put('/:id', (req, res) => {
-	res.status(200);
-	let id = parseInt(req.params.id);
-	let event = events.find(event => event.id === id);
-	event.title = req.body.title;
-	event.description = req.body.description;
-	res.json(event);
+	const events = db.get().collection('events');
+	const returned = events.findOneAndUpdate({ id : parseInt(req.params.id) },
+		{ $set: { title : req.body.title, description: req.body.description } },
+		{ returnNewDocument: true },
+		function(error, data){
+			console.log(error, data);
+			res.status(200).json(data.value);
+		});
 })
 
 router.delete('/:id', (req, res) => {
-	let id = parseInt(req.params.id);
-	let event = events.find(event => event.id === id);
 
-	if (event) {
-		events = events.filter(event => event.id !== id);
-		console.log(id, events);
-		res.status(200);
-		res.json(event);
-	} else {
-		res.status(404);
-		res.send('event not found');
-	}
+	const events = db.get().collection('events');
+	const returned = events.findOneAndDelete({ id : parseInt(req.params.id) },
+		function(error, data){
+			if (data.value) {
+				res.status(200).json(data.value);
+			}
+			console.log(error, data);
+			res.status(404).json({status:'error'});
+		});
+
+
+
 })
 
 module.exports = router;

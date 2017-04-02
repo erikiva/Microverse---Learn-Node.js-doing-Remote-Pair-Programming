@@ -55,6 +55,7 @@ describe('Test Events Api', () => {
 	describe('/POST event', () => {
 		it('It should POST an event', (done) => {
 			let event = {
+        'id': 4,
 				'title': 'a',
 				'description': 'a',
 				'date': '01-02-2017'
@@ -72,5 +73,57 @@ describe('Test Events Api', () => {
 			});
 		});
 	});
+
+
+  /*
+  * Test the /PUT route
+  */
+  describe('/PUT event', () => {
+    it('It should UPDATE an event', (done) => {
+      let event = {
+        'title': 'a',
+        'description': 'a',
+        'date': '01-02-2017'
+      };
+
+      chai.request('http://localhost:3000')
+      .put('/events/1')
+      .send(event)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.error.should.be.false;
+        res.body.should.be.an('object');
+        res.body.should.have.property('title').equal('a');
+        done();
+      });
+    });
+  });
+
+
+  /*
+  * Test the /DELETE route
+  */
+  describe('/DELETE event', () => {
+    it('It should DELETEan event', (done) => {
+      chai.request('http://localhost:3000')
+      .delete('/events/4')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.error.should.be.false;
+        res.body.should.be.an('object');
+        res.body.should.have.property('title').equal('a');
+        done();
+      });
+    });
+    it('It should not DELETE an event that is not there', (done) => {
+      chai.request('http://localhost:3000')
+      .delete('/events/4')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+    });
+  });
+
 });
 

@@ -2,6 +2,7 @@ let assert   = require('assert');
 let chai     = require('chai');
 let chaiHttp = require('chai-http');
 let should   = chai.should();
+const app 	 = require('../app');
 
 chai.use(chaiHttp);
 

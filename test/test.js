@@ -129,5 +129,24 @@ describe('Test Events Api', () => {
     });
   });
 
+
+	/*
+	* Test the /GET route
+	*/
+	describe('/GET search', () => {
+		it('It should find  events by search term', (done) => {
+			chai.request('http://localhost:3000')
+			.get('/events/search/irqw')
+			.end((err, res) => {
+				res.should.have.status(200);
+				res.error.should.be.false;
+				res.body.should.be.an('array');
+				res.body.should.have.length(5);
+				done();
+			});
+		});
+	});
+
+
 });
 

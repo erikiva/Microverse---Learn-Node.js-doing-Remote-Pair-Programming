@@ -28,23 +28,30 @@ let create = (req, res) => {
 
 let updateById = (req, res) => {
 	let conditions = { id : parseInt(req.params.id) };
-	let update     = { 
-			title : req.body.title, 
-			description: req.body.description 
+	let update     = {
+			title : req.body.title,
+			description: req.body.description
 		};
 	let options    = { new: true };
 
 	Event.findOneAndUpdate( conditions, update, options, function(error, event){
 			res.status(200).json(event);
-		} 
+		}
 	);
 }
 
 let deleteById = (req, res) => {
 	let conditions = { id : parseInt(req.params.id) };
-	
+
 	Event.deleteOne(conditions, function(error, event){
 		res.status(200).json(event);
+	});
+}
+
+let search = (req, res) => {
+	Event.find({title: new RegExp(req.params.term)}, function (err, events) {
+  		if (err) return console.error(err);
+  		res.status(200).json(events);
 	});
 }
 
@@ -53,7 +60,8 @@ let controller = {
 	getById,
 	create,
 	updateById,
-	deleteById
+	deleteById,
+	search
 };
 
 module.exports = controller;

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const hostname = '127.0.0.1';
 const port     = 3000;
 const app      = express();
-const events = require('./events/events.api');
+const events = require('./events/events.routes');
 //const events = require('./api_events');
 
 /*const db = require('./db');
@@ -23,9 +23,8 @@ db.connect(url, function(err) {
   }
 })*/
 
-const  mongoose = require('./mongoose');
+const  mongoose = require('./db/mongoose');
 mongoose();
-
 
 
 app.use(bodyParser.json()); // for parsing application/json

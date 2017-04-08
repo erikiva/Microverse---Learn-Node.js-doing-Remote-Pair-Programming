@@ -55,7 +55,7 @@ describe('Test Events Api', () => {
 	describe('/POST event', () => {
 		it('It should POST an event', (done) => {
 			let event = {
-        'id': 4,
+        		'id': 4,
 				'title': 'a',
 				'description': 'a',
 				'date': '01-02-2017'
@@ -111,7 +111,8 @@ describe('Test Events Api', () => {
         res.should.have.status(200);
         res.error.should.be.false;
         res.body.should.be.an('object');
-        res.body.should.have.property('title').equal('a');
+        res.body.should.have.property('ok').equal(1);
+        res.body.should.have.property('n').equal(1);
         done();
       });
     });
@@ -119,7 +120,9 @@ describe('Test Events Api', () => {
       chai.request('http://localhost:3000')
       .delete('/events/4')
       .end((err, res) => {
-        res.should.have.status(200);
+      	res.body.should.have.property('ok').equal(1);
+      	res.body.should.have.property('n').equal(0);
+        //res.should.have.status(200);
         done();
       });
     });

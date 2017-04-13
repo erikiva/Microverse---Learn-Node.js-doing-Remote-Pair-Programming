@@ -7,6 +7,7 @@ const hostname = '127.0.0.1';
 const port     = 3000;
 const app      = express();
 const events = require('./events/events.routes');
+const users = require('./users/users.routes');
 //const events = require('./api_events');
 
 /*const db = require('./db');
@@ -35,6 +36,7 @@ app.get('/', (req, res)	=> {
 });
 
 app.use('/events', events);
+app.use('/users', users);
 
 
 app.listen(3000, function () {

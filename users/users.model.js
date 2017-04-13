@@ -4,7 +4,8 @@ let userSchema = mongoose.Schema({
 	'username': {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        index: true
       },
 	'fullname': {
         type: String,
@@ -17,9 +18,14 @@ let userSchema = mongoose.Schema({
 	'email': {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        index: true
       }
 });
+
+userSchema.methods.validPassword = function(password){
+  return (this.password === password);
+};
 
 let User = mongoose.model('User', userSchema);
 

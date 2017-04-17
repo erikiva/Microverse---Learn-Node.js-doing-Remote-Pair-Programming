@@ -22,8 +22,9 @@ describe('Test Events Api', () => {
 	*/
 	describe('/GET events', () => {
 		it('It should GET all the events', (done) => {
-			chai.request('http://localhost:3000')
+			chai.request(app)
 			.get('/events')
+			.auth('natalia 22', 'aassddff')
 			.end((err, res) => {
 				res.should.have.status(200);
 				res.error.should.be.false;
@@ -38,7 +39,7 @@ describe('Test Events Api', () => {
 	*/
 	describe('/GET event by :Id', () => {
 		it('It should GET an event by Id', (done) => {
-			chai.request('http://localhost:3000')
+			chai.request(app)
 			.get('/events/1')
 			.end((err, res) => {
 				res.should.have.status(200);
@@ -62,7 +63,7 @@ describe('Test Events Api', () => {
 				'date': '01-02-2017'
 			};
 
-			chai.request('http://localhost:3000')
+			chai.request(app)
 			.post('/events')
 			.send(event)
 			.end((err, res) => {
@@ -87,7 +88,7 @@ describe('Test Events Api', () => {
         'date': '01-02-2017'
       };
 
-      chai.request('http://localhost:3000')
+      chai.request(app)
       .put('/events/1')
       .send(event)
       .end((err, res) => {
@@ -106,7 +107,7 @@ describe('Test Events Api', () => {
   */
   describe('/DELETE event', () => {
     it('It should DELETEan event', (done) => {
-      chai.request('http://localhost:3000')
+      chai.request(app)
       .delete('/events/4')
       .end((err, res) => {
         res.should.have.status(200);
@@ -118,7 +119,7 @@ describe('Test Events Api', () => {
       });
     });
     it('It should not DELETE an event that is not there', (done) => {
-      chai.request('http://localhost:3000')
+      chai.request(app)
       .delete('/events/4')
       .end((err, res) => {
       	res.body.should.have.property('ok').equal(1);
@@ -135,7 +136,7 @@ describe('Test Events Api', () => {
 	*/
 	describe('/GET search', () => {
 		it('It should find  events by search term', (done) => {
-			chai.request('http://localhost:3000')
+			chai.request(app)
 			.get('/events/search/irqw')
 			.end((err, res) => {
 				res.should.have.status(200);
@@ -146,7 +147,6 @@ describe('Test Events Api', () => {
 			});
 		});
 	});
-
 
 });
 
